@@ -18,4 +18,10 @@ public class IndexController {
         return "home";
     }
 
+
+    @RequestMapping("/indez")
+    public String index() {
+        return "index";
+    }
+
 }
