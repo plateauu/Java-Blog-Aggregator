@@ -19,7 +19,7 @@ public class IndexController {
     }
 
 
-    @RequestMapping("/indez")
+    @RequestMapping("/index")
     public String index() {
         return "index";
     }

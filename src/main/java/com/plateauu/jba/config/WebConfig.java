@@ -4,13 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
-
-import static javafx.application.ConditionalFeature.WEB;
 
 
 @EnableWebMvc
@@ -25,6 +21,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 //        bean.setPrefix("/WEB-INF/views/");
 //        bean.setSuffix(".jsp");
 //        return bean;
+
     @Bean
     public TilesConfigurer tilesConfigurer(){
         TilesConfigurer tilesConfigurer = new TilesConfigurer();
@@ -34,19 +31,19 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     @Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        TilesViewResolver tilesViewResolver = new TilesViewResolver();
+        registry.viewResolver(tilesViewResolver);
+
+    }
+
+    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
-
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
-    }
-    @Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {
-        TilesViewResolver viewResolver = new TilesViewResolver();
-        registry.viewResolver(viewResolver);
-
     }
 
 //    }

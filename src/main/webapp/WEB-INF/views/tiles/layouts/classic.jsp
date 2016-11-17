@@ -12,12 +12,12 @@
     <title><tiles:getAsString name="title"/></title>
 </head>
 <body>
-<tiles:insertAttribute name="body"/>
-
-</body>
+    <tiles:insertAttribute name="body"/>
 <center>
     <tiles:insertAttribute name="footer"/>
-
 </center>
+
+</body>
+
 
 </html>
