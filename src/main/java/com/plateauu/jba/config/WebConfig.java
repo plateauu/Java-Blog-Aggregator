@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan("com.plateauu.jba")
+@ComponentScan("com.plateauu.jba.controller")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     //
