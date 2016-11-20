@@ -21,6 +21,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
+
 @ComponentScan(basePackages = "com.plateauu.jba", excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = {Controller.class, EnableWebMvc.class})})
 public class RootContext {
 
@@ -54,7 +55,6 @@ public class RootContext {
 
     }
 
-
     @Bean
     public JpaTransactionManager transactionManager(DataSource dataSource, EntityManagerFactory emf) {
         JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
@@ -63,5 +63,8 @@ public class RootContext {
         return jpaTransactionManager;
 
     }
+
+
+
 
 }
