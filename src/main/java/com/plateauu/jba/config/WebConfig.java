@@ -14,7 +14,6 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 @ComponentScan("com.plateauu.jba.controller")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-    //
 //    @Bean
 //    public InternalResourceViewResolver jspViewResolver() {
 //        InternalResourceViewResolver bean = new InternalResourceViewResolver();
@@ -46,12 +45,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         configurer.enable();
     }
 
+//    @Bean(name = "multipartResolver")
+//    public CommonsMultipartResolver getMultipartResolver(){
+//        return new CommonsMultipartResolver();
 //    }
-
-  /*  @Bean(name = "multipartResolver")
-    public CommonsMultipartResolver getMultipartResolver(){
-        return new CommonsMultipartResolver();
-    }*/
 
     @Bean(name = "messageSource")
     public ReloadableResourceBundleMessageSource getMessageSource(){
