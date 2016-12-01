@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.persistence.EntityManagerFactory;
-import javax.servlet.FilterRegistration;
 import javax.sql.DataSource;
 
 @Configuration
@@ -73,7 +72,7 @@ public class RootContext {
         OpenEntityManagerInViewFilter entityManagerInViewFilter = new OpenEntityManagerInViewFilter();
         entityManagerInViewFilter.setEntityManagerFactoryBeanName("emf");
         entityManagerInViewFilter.setPersistenceUnitName("transactionManager");
-        FilterRegistration.Dynamic filterRegistration = 
+//        FilterRegistration.Dynamic filterRegistration = servlet
 
         return entityManagerInViewFilter;
 
