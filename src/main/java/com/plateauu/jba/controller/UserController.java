@@ -18,7 +18,6 @@ public class UserController {
     public String users(Model model) {
         model.addAttribute("users", userService.findAll());
         return "users";
-
     }
 
     @RequestMapping("/users/{id}")

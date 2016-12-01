@@ -7,6 +7,8 @@ import com.plateauu.jba.repository.BlogRepository;
 import com.plateauu.jba.repository.ItemRepository;
 import com.plateauu.jba.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +26,7 @@ public class UserService {
     @Autowired
     private ItemRepository itemRepository;
 
-    public List<User> findAll(){
+    public List<User> findAll() {
         return userRepository.findAll();
 
     }
@@ -38,7 +40,7 @@ public class UserService {
         User user = findOne(id);
         List<Blog> blogs = blogRepository.findByUser(user);
         for (Blog blog : blogs) {
-            List<Item> items = itemRepository.findByBlog(blog);
+            List<Item> items = itemRepository.findByBlog(blog, new PageRequest(0, 10, Sort.Direction.DESC, "publishedDate"));
             blog.setItems(items);
 
         }
