@@ -11,7 +11,6 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.stereotype.Controller;
@@ -65,20 +64,5 @@ public class RootContext {
         return jpaTransactionManager;
 
     }
-
-
-    @Bean
-    public OpenEntityManagerInViewFilter openEntityManagerInViewFilter(){
-        OpenEntityManagerInViewFilter entityManagerInViewFilter = new OpenEntityManagerInViewFilter();
-        entityManagerInViewFilter.setEntityManagerFactoryBeanName("emf");
-        entityManagerInViewFilter.setPersistenceUnitName("transactionManager");
-//        FilterRegistration.Dynamic filterRegistration = servlet
-
-        return entityManagerInViewFilter;
-
-
-    }
-
-
 
 }
