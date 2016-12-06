@@ -25,6 +25,11 @@ public class UserController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String doRegister(@ModelAttribute("user") User user){
         userService.save(user);
+        return "redirect:/register.html?success=true";
+    }
+
+    @RequestMapping("/register")
+    public String showRegister() {
         return "user-register";
     }
 
@@ -40,8 +45,4 @@ public class UserController {
         return "user-detail";
     }
 
-    @RequestMapping("/register")
-    public String showRegister() {
-        return "user-register";
-    }
 }
