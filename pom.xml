@@ -32,6 +32,7 @@
     <!-- Shared version number properties -->
     <properties>
         <org.springframework.version>4.3.4.RELEASE</org.springframework.version>
+        <org.spring.security.version>4.2.0.RELEASE</org.spring.security.version>
     </properties>
 
     <dependencies>
@@ -265,6 +266,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>1.10.4.RELEASE</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.hsqldb/hsqldb -->
         <dependency>
             <groupId>org.hsqldb</groupId>
@@ -273,23 +280,21 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>1.10.4.RELEASE</version>
-        </dependency>
-
-
-        <!-- ... other dependency elements ... -->
+        <!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>4.2.0.RELEASE</version>
+            <version>${org.spring.security.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>4.2.0.RELEASE</version>
+            <version>${org.spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${org.spring.security.version}</version>
         </dependency>
 
 
