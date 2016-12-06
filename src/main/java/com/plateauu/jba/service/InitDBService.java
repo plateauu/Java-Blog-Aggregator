@@ -9,6 +9,7 @@ import com.plateauu.jba.repository.ItemRepository;
 import com.plateauu.jba.repository.RoleRepository;
 import com.plateauu.jba.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -31,6 +32,9 @@ public class InitDBService {
     @Autowired
     private BlogRepository blogRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
     @PostConstruct
     public void init(){
         Role roleUser = new Role();
@@ -43,6 +47,7 @@ public class InitDBService {
 
         User userAdmin = new User();
         userAdmin.setName("admin");
+        userAdmin.setPassword(encoder.encode("admin"));
         List<Role> roles = new ArrayList<>();
         roles.add(roleAdmin);
         roles.add(roleUser);
