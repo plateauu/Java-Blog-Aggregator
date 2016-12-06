@@ -60,7 +60,8 @@
                             href="<spring:url value="/register.html" />">Register</a></li>
                     <li class="${current == 'login' ? 'active' : ''}"><a
                             href="<spring:url value="/login.html" />">Login</a></li>
-                    <li><a href="<spring:url value="/login?logout"/>">Logout</a></li>
+                    <li class="${current=='logout' ? 'active' : ''}"><a
+                            href="<spring:url value="/logout.html"/>">Logout</a></li>
 
 
                 </ul>

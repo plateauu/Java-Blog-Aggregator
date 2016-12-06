@@ -1,7 +1,6 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../layouts/taglib.jsp" %>
-<jstl:url value="/login.html" var="loginURL"/>
+<jstl:url value="/logout.html" var="loginURL"/>
 
 <style>
 
@@ -48,14 +47,11 @@
 </style>
 
 
-
 <form class="form-signin" action="${loginURL}" method="post">
-    <h2 class="form-signin-heading">Please sign in</h2>
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="text" name="username" id="inputEmail" class="form-control" placeholder="Name" required autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Sign in</button>
+    <h2 class="form-signin-heading">Really want to logout?</h2>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Logout</button>
 </form>
+
+
 
