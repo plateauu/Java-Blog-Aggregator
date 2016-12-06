@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                                 "join user_role on user.id = user_role.users_id " +
                                 "join role on user_role.roles_id = role.id " +
                                 "where user.name = ?")
-                        .usersByUsernameQuery("select name, password, 1 from user where name = ?");
+                        .usersByUsernameQuery("select name, password, enabled from user where name = ?");
     }
 
     @Override
