@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.security.Principal;
+
 @Controller
 public class UserController {
 
@@ -43,6 +45,14 @@ public class UserController {
     public String detail(Model model, @PathVariable int id){
         model.addAttribute("user", userService.findOneWithBlogs(id));
         return "user-detail";
+    }
+
+    @RequestMapping("/account")
+    public String account(Model model, Principal principal) {
+        String name = principal.getName();
+        model.addAttribute("user", userService.findOneWithBlogs(name));
+        return "user-detail";
+
     }
 
 }
