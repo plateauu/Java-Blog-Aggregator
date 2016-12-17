@@ -1,7 +1,9 @@
 package com.plateauu.jba.controller;
 
 
+import com.plateauu.jba.entity.Blog;
 import com.plateauu.jba.entity.User;
+import com.plateauu.jba.service.BlogService;
 import com.plateauu.jba.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,8 +21,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BlogService blogService;
+
     @ModelAttribute("user")
-    private User construct() {
+    private User constructUser() {
         return new User();
     }
 
@@ -28,6 +33,19 @@ public class UserController {
     public String doRegister(@ModelAttribute("user") User user){
         userService.save(user);
         return "redirect:/register.html?success=true";
+    }
+
+
+    @ModelAttribute("blog")
+    private Blog constructBlog() {
+        return new Blog();
+    }
+
+    @RequestMapping(value = "/account", method = RequestMethod.POST)
+    public String doAddBlog(@ModelAttribute("blog") Blog blog, Principal principal){
+        String userName = principal.getName();
+        blogService.save(blog, userName);
+        return "redirect:/account.html";
     }
 
     @RequestMapping("/register")
@@ -54,5 +72,7 @@ public class UserController {
         return "user-detail";
 
     }
+
+
 
 }

@@ -13,6 +13,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -26,7 +27,6 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 
     <title><tiles:getAsString name="title"/></title>
@@ -63,7 +63,7 @@
                         <li class="${current == 'login' ? 'active' : ''}"><a href="<spring:url value="/login.html" />">Login</a></li>
                     </security:authorize>
                     <security:authorize access="isAuthenticated()">
-                        <li class="${current == 'users' ? 'active' : ''}"><a href="<spring:url value="/account.html"/>">My accounts</a></li>
+                        <li class="${current == 'users' ? 'active' : ''}"><a href="<spring:url value="/account.html"/>">My account</a></li>
                         <li class="${current=='logout' ? 'active' : ''}"><a href="<spring:url value="/logout.html"/>">Logout</a></li>
                     </security:authorize>
 

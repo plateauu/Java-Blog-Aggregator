@@ -9,7 +9,7 @@ public class Blog {
     @Id
     @GeneratedValue
     private Integer id;
-    private String Url;
+    private String url;
     private String name;
 
     @ManyToOne
@@ -44,11 +44,11 @@ public class Blog {
     }
 
     public String getUrl() {
-        return Url;
+        return url;
     }
 
     public void setUrl(String url) {
-        Url = url;
+        this.url = url;
     }
 
     public String getName() {
