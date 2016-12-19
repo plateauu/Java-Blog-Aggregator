@@ -49,10 +49,9 @@
 
 <script type="text/javascript">
 
-    $(document).ready(function()
-    {
-        $('.nav-tabs a:first').tab('show') // Select first tab
-    }
+    $(document).ready(function () {
+                $('.nav-tabs a:first').tab('show') // Select first tab
+            }
     )
     ;
 
@@ -72,6 +71,9 @@
         <jstl:forEach items="${user.blogs}" var="blog">
             <div role="tabpanel" class="tab-pane active" id="blog_${blog.id}">
                 <h1>${blog.name}</h1>
+
+            <a href="<spring:url value="/blog/remove/${blog.id}.html"/>" class="btn btn-danger">Delete blog</a>
+                <br/><br/>
                 <p>${blog.url}</p>
 
                 <table class="table table-bordered table-hover table-striped">

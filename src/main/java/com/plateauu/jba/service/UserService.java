@@ -73,4 +73,8 @@ public class UserService {
         user.setRoles(roles);
         userRepository.save(user);
     }
+
+    public void delete(int id) {
+        userRepository.delete(id);
+    }
 }

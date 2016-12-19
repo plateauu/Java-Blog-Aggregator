@@ -12,9 +12,8 @@
 <table class="table table-bordered table-hover table-striped">
     <thead>
     <tr>
-        <th>
-            User List
-        </th>
+        <th>User List</th>
+        <th>Operations</th>
     </tr>
 
     </thead>
@@ -25,6 +24,9 @@
                 <a href="<spring:url value="/users/${user.id}.html"/> ">
                         ${user.name}
                 </a>
+            </td>
+            <td>
+                <a href="<spring:url value="/users/remove/${user.id}.html"/>" class="btn btn-danger btn-xs">Remove</a>
             </td>
         </tr>
 
