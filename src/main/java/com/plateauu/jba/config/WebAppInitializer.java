@@ -3,11 +3,15 @@ package com.plateauu.jba.config;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class WebAppInitializer implements WebApplicationInitializer {
@@ -26,6 +30,14 @@ public class WebAppInitializer implements WebApplicationInitializer {
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
 
+        FilterRegistration.Dynamic encoding = servletContext.addFilter("characterEncodingFilter", CharacterEncodingFilter.class);
+
+        Map<String, String> params = new HashMap<>();
+        params.put("encoding", "UTF-8");
+        params.put("forceEncoding", "true");
+        encoding.setInitParameters(params);
+
+        encoding.addMappingForUrlPatterns(null, true, "/*");
 
 
 

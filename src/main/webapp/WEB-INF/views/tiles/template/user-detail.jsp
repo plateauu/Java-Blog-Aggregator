@@ -74,12 +74,12 @@
     <div class="tab-content">
         <jstl:forEach items="${user.blogs}" var="blog">
             <div role="tabpanel" class="tab-pane active" id="blog_${blog.id}">
-                <h1>${blog.name}</h1>
+                <h1><jstl:out value="${blog.name}"/></h1>
 
                 <a href="<spring:url value="/blog/remove/${blog.id}.html"/>" class="btn btn-danger triggerRemove">Delete
                     blog</a>
                 <br/><br/>
-                <p>${blog.url}</p>
+                <p><jstl:out value="${blog.url}"/></p>
 
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
@@ -89,8 +89,8 @@
                     <tbody>
                     <jstl:forEach items="${blog.items}" var="item">
                         <tr>
-                            <td>${item.title}</td>
-                            <td>${item.link}</td>
+                            <td><jstl:out value="${item.title}"/></td>
+                            <td><jstl:out value="${item.link}"/></td>
                         </tr>
                     </jstl:forEach>
                     </tbody>

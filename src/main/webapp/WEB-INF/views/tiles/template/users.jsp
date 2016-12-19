@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: plateauu
@@ -36,7 +37,7 @@
         <tr>
             <td>
                 <a href="<spring:url value="/users/${user.id}.html"/> ">
-                        ${user.name}
+                    <jstl:out value="${user.name}"/>
                 </a>
             </td>
             <td>
