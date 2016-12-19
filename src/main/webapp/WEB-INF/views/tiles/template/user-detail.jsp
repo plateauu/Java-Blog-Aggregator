@@ -17,7 +17,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">New blog</h4>
+                    <h4 class="modal-title" id="myModalBlogLabel">New blog</h4>
                 </div>
                 <div class="modal-body">
 
@@ -51,8 +51,12 @@
 
     $(document).ready(function () {
                 $('.nav-tabs a:first').tab('show') // Select first tab
-            }
-    )
+                $('.triggerRemove').click(function (e) {
+                    e.preventDefault();
+                    $("#modalRemove .removeBtn").attr("href", $(this).attr("href"));
+                    $("#modalRemove").modal();
+                })
+            })
     ;
 
 </script>
@@ -72,7 +76,8 @@
             <div role="tabpanel" class="tab-pane active" id="blog_${blog.id}">
                 <h1>${blog.name}</h1>
 
-            <a href="<spring:url value="/blog/remove/${blog.id}.html"/>" class="btn btn-danger">Delete blog</a>
+                <a href="<spring:url value="/blog/remove/${blog.id}.html"/>" class="btn btn-danger triggerRemove">Delete
+                    blog</a>
                 <br/><br/>
                 <p>${blog.url}</p>
 
@@ -100,8 +105,22 @@
 </div>
 
 
-
-
-
-
-
+<!-- Modal -->
+<div class="modal fade" id="modalRemove" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Delete blog?</h4>
+            </div>
+            <div class="modal-body">
+                Really want to delete?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <a href="" class="btn btn-danger removeBtn">Remove</a>
+            </div>
+        </div>
+    </div>
+</div>
