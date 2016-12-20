@@ -45,6 +45,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         configurer.enable();
     }
 
+
+
 //    @Bean(name = "multipartResolver")
 //    public CommonsMultipartResolver getMultipartResolver(){
 //        return new CommonsMultipartResolver();

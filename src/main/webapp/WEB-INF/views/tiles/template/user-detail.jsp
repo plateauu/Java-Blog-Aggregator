@@ -25,6 +25,7 @@
                         <label for="name" class="col-sm-2 control-label">Name:</label>
                         <div class="col-sm-10">
                             <form:input path="name" cssClass="form-control"/>
+                            <form:errors path="name"/>
                         </div>
                     </div>
 
@@ -32,6 +33,7 @@
                         <label for="name" class="col-sm-2 control-label">URL:</label>
                         <div class="col-sm-10">
                             <form:input path="url" cssClass="form-control"/>
+                            <form:errors path="url"/>
                         </div>
                     </div>
 
@@ -50,13 +52,13 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-                $('.nav-tabs a:first').tab('show') // Select first tab
-                $('.triggerRemove').click(function (e) {
-                    e.preventDefault();
-                    $("#modalRemove .removeBtn").attr("href", $(this).attr("href"));
-                    $("#modalRemove").modal();
-                })
-            })
+        $('.nav-tabs a:first').tab('show') // Select first tab
+        $('.triggerRemove').click(function (e) {
+            e.preventDefault();
+            $("#modalRemove .removeBtn").attr("href", $(this).attr("href"));
+            $("#modalRemove").modal();
+        })
+    })
     ;
 
 </script>

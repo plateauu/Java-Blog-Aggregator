@@ -1,6 +1,9 @@
 package com.plateauu.jba.entity;
 
+import org.hibernate.validator.constraints.URL;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -9,11 +12,16 @@ public class Blog {
     @Id
     @GeneratedValue
     private Integer id;
+
+    @Size(min=1, message = "Invalid URL address")
+    @URL(message = "Invalid URL address")
     private String url;
+
+    @Size(min = 1, message = "Name must be at least 1 character")
     private String name;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "blog", cascade = CascadeType.REMOVE)
