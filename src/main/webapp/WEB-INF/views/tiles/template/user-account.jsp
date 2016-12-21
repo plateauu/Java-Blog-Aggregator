@@ -4,7 +4,7 @@
 
 <br/>
 
-<form:form commandName="blog" cssClass="form-horizontal">
+<form:form commandName="blog" cssClass="form-horizontal registrationForm">
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
         New blog
@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="name" class="col-sm-2 control-label">URL:</label>
+                        <label for="url" class="col-sm-2 control-label">URL:</label>
                         <div class="col-sm-10">
                             <form:input path="url" cssClass="form-control"/>
                             <form:errors path="url"/>
@@ -46,6 +46,31 @@
         </div>
     </div>
 </form:form>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".registrationForm").validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 1
+                },
+                url: {
+                    required: true,
+                    url: true,
+                },
+            },
+            highlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+            },
+            unhighlight: function (element) {
+                $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+            },
+        });
+    });
+</script>
+
 
 <br/><br/>
 
