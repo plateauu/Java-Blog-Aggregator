@@ -27,6 +27,9 @@ import java.util.Locale;
 public class RssService {
 
 
+    private static final String SQUARE = "<";
+    private static final String DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss Z";
+
     List<Item> getItems(File file) throws RssException {
         return getItems(new StreamSource(file));
     }
@@ -52,12 +55,18 @@ public class RssService {
                     Item item = new Item();
                     item.setTitle(rssItem.getTitle());
                     item.setLink(rssItem.getLink());
-                    item.setDescription(rssItem.getDescription());
-                    Date parseDate = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH).parse(rssItem.getPubDate());
+
+                    if (rssItem.getDescription().contains(SQUARE)) {
+                        item.setDescription(rssItem.getDescription().substring(0, rssItem.getDescription().indexOf(SQUARE)));
+                    } else {
+                        item.setDescription(rssItem.getDescription());
+                    }
+
+                    Date parseDate = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH).parse(rssItem.getPubDate());
+                    item.setPublishedDate(parseDate);
 
                     //TODO convert Date to LocalDateTime
-                    // LocalDateTime parseDate = LocalDateTime.parse(rssItem.getPubDate(), DateTimeFormatter.RFC_1123_DATE_TIME);
-                    item.setPublishedDate(parseDate);
+//                     LocalDateTime parseDate = LocalDateTime.parse(rssItem.getPubDate(), DateTimeFormatter.RFC_1123_DATE_TIME);
                     itemList.add(item);
 
                 }

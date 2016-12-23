@@ -37,7 +37,7 @@ public class BlogService {
             List<Item> items = rssService.getItems(blog.getUrl());
             for (Item item : items) {
                 Optional<Item> previousItems = Optional.ofNullable(itemRepository.findByBlogAndLink(blog, blog.getUrl()));
-                if (!previousItems.isPresent()) {
+                if (isUnique(previousItems)) {
                     item.setBlog(blog);
                     itemRepository.save(item);
                 }
@@ -46,6 +46,10 @@ public class BlogService {
         } catch (RssException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean isUnique(Optional<Item> previousItems) {
+        return !previousItems.isPresent();
     }
 
     public void save(Blog blog, String name) {

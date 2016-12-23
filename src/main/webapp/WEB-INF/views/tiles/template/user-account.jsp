@@ -120,7 +120,7 @@
                             <td><jstl:out value="${item.publishedDate}"/></td>
                             <td>
                                 <strong>
-                                    <a href="<jstl:out value='{item.link}'/>" target="_blank">
+                                    <a href="<jstl:out value='${item.link}'/>" target="_blank">
                                         <jstl:out value="${item.title}"/>
                                     </a>
                                 </strong>
