@@ -8,6 +8,7 @@ import com.plateauu.jba.repository.BlogRepository;
 import com.plateauu.jba.repository.ItemRepository;
 import com.plateauu.jba.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,16 @@ public class BlogService {
             e.printStackTrace();
         }
     }
+
+    @Scheduled(fixedDelay = HOUR_IN_MILLIS)
+    public void reloadBlogs() {
+        blogRepository.findAll()
+                .forEach(this::saveItems);
+
+
+    }
+
+    private static final int HOUR_IN_MILLIS = 3600000;
 
     private boolean isUnique(Optional<Item> previousItems) {
         return !previousItems.isPresent();

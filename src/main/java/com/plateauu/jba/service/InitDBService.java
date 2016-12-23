@@ -1,7 +1,6 @@
 package com.plateauu.jba.service;
 
 import com.plateauu.jba.entity.Blog;
-import com.plateauu.jba.entity.Item;
 import com.plateauu.jba.entity.Role;
 import com.plateauu.jba.entity.User;
 import com.plateauu.jba.repository.BlogRepository;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -61,19 +59,19 @@ public class InitDBService {
         blogJavaVids.setUser(userAdmin);
         blogRepository.save(blogJavaVids);
 
-        Item item1 = new Item();
-        item1.setBlog(blogJavaVids);
-        item1.setTitle("first");
-        item1.setLink("http://www.javavids.com");
-        item1.setPublishedDate(new Date());
-        itemRepository.save(item1);
-
-        Item item2 = new Item();
-        item2.setBlog(blogJavaVids);
-        item2.setTitle("second");
-        item2.setLink("http://www.javavids.com");
-        item2.setPublishedDate(new Date());
-        itemRepository.save(item2);
+//        Item item1 = new Item();
+//        item1.setBlog(blogJavaVids);
+//        item1.setTitle("first");
+//        item1.setLink("http://www.javavids.com");
+//        item1.setPublishedDate(new Date());
+//        itemRepository.save(item1);
+//
+//        Item item2 = new Item();
+//        item2.setBlog(blogJavaVids);
+//        item2.setTitle("second");
+//        item2.setLink("http://www.javavids.com");
+//        item2.setPublishedDate(new Date());
+//        itemRepository.save(item2);
 
     }
 
