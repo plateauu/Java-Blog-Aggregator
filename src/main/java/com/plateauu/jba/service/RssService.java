@@ -27,11 +27,11 @@ import java.util.Locale;
 public class RssService {
 
 
-    public List<Item> getItems(File file) throws RssException {
+    List<Item> getItems(File file) throws RssException {
         return getItems(new StreamSource(file));
     }
 
-    public List<Item> getItems(String url) throws RssException {
+    List<Item> getItems(String url) throws RssException {
         return getItems(new StreamSource(url));
     }
 

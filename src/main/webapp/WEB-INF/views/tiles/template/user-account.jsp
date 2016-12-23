@@ -110,14 +110,24 @@
 
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
-                    <th>Title</th>
-                    <th>Link</th>
+                    <th>Date</th>
+                    <th>Item</th>
                     </thead>
                     <tbody>
                     <jstl:forEach items="${blog.items}" var="item">
+
                         <tr>
-                            <td><jstl:out value="${item.title}"/></td>
-                            <td><jstl:out value="${item.link}"/></td>
+                            <td><jstl:out value="${item.publishedDate}"/></td>
+                            <td>
+                                <strong>
+                                    <a href="<jstl:out value='{item.link}'/>" target="_blank">
+                                        <jstl:out value="${item.title}"/>
+                                    </a>
+                                </strong>
+                                <br/>
+                                <jstl:out value="${item.description}"/>
+
+                            </td>
                         </tr>
                     </jstl:forEach>
                     </tbody>
