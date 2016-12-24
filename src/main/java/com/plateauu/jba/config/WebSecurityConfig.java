@@ -40,11 +40,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                         .dataSource(dataSource)
                         .withDefaultSchema()
                         .passwordEncoder(encoder())
-                        .authoritiesByUsernameQuery("select user.name, role.name from user " +
-                                "join user_role on user.id = user_role.users_id " +
-                                "join role on user_role.roles_id = role.id " +
-                                "where user.name = ?")
-                        .usersByUsernameQuery("select name, password, enabled from user where name = ?");
+                        .authoritiesByUsernameQuery("select app_user.name, role.name from app_user " +
+                                "join app_user_role on app_user.id = app_user_role.users_id " +
+                                "join role on app_user_role.roles_id = role.id " +
+                                "where app_user.name = ?")
+                        .usersByUsernameQuery("select name, password, enabled from app_user where name = ?");
     }
 
     @Override
