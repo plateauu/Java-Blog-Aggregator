@@ -17,6 +17,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.util.logging.Logger;
 
 @Configuration
 @Profile("dev")
@@ -27,8 +28,11 @@ import javax.sql.DataSource;
 public class RootContextDev {
 
 
+    private static final Logger log = Logger.getLogger("Logger");
+
     @Bean
     public DataSource dataSource() {
+        log.info("Creating HSQL database");
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         EmbeddedDatabase db = builder
                 .setType(EmbeddedDatabaseType.HSQL)

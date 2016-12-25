@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 
 public class WebAppInitializer implements WebApplicationInitializer {
 
+
     public static final String DEV = "dev";
     public static final String PROD = "prod";
 
@@ -25,17 +26,14 @@ public class WebAppInitializer implements WebApplicationInitializer {
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
+
+
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
+        System.setProperty(AbstractEnvironment.DEFAULT_PROFILES_PROPERTY_NAME, PROD);
 
-        //Uncomment if you want test
-        //System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, DEV);
-        log.info(System.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME));
+//        System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, DEV);
 
-        if (System.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME).contains(DEV)) {
-            rootContext.register(RootContextDev.class, WebSecurityConfig.class);
-        } else {
-            rootContext.register(RootContext.class, WebSecurityConfig.class);
-        }
+        rootContext.register(RootContext.class, RootContextDev.class, WebSecurityConfig.class);
 
         servletContext.addListener(new ContextLoaderListener(rootContext));
 

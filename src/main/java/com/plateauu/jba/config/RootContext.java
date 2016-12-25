@@ -20,6 +20,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @Configuration
 @Profile("prod")
@@ -29,8 +30,13 @@ import java.util.Map;
 @ComponentScan(basePackages = "com.plateauu.jba", excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = {Controller.class, EnableWebMvc.class})})
 public class RootContext {
 
+    private static final Logger log = Logger.getLogger("Logger");
+
+
     @Bean
     public BasicDataSource dataSource() throws URISyntaxException {
+        log.info("Creating postgreSQL database");
+
         URI dbUri = new URI(System.getenv("DATABASE_URL"));
 
         String username = dbUri.getUserInfo().split(":")[0];
@@ -62,8 +68,8 @@ public class RootContext {
         emf.setPersistenceProvider(new HibernatePersistenceProvider());
 //        emf.setJpaVendorAdapter(jpaVendorAdapter);
         Map<String, String> properties = new HashMap<>();
-        properties.put("hibernate.ddl-auto", "update");
-        properties.put("hibernate.show_sql", "false");
+        properties.put("hibernate.ddl-auto", "create");
+        properties.put("hibernate.show_sql", "true");
         emf.setJpaPropertyMap(properties);
         return emf;
 
