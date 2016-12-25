@@ -1,5 +1,6 @@
 package com.plateauu.jba.config;
 
+import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -12,14 +13,29 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 
 public class WebAppInitializer implements WebApplicationInitializer {
 
+    public static final String DEV = "dev";
+    public static final String PROD = "prod";
+
+    private final Logger log = Logger.getLogger(getClass().getName());
+
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-        rootContext.register(RootContext.class, WebSecurityConfig.class);
+
+        //Uncomment if you want test
+        //System.setProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME, DEV);
+        log.info(System.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME));
+
+        if (System.getProperty(AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME).contains(DEV)) {
+            rootContext.register(RootContextDev.class, WebSecurityConfig.class);
+        } else {
+            rootContext.register(RootContext.class, WebSecurityConfig.class);
+        }
 
         servletContext.addListener(new ContextLoaderListener(rootContext));
 
@@ -38,7 +54,6 @@ public class WebAppInitializer implements WebApplicationInitializer {
         encoding.setInitParameters(params);
 
         encoding.addMappingForUrlPatterns(null, true, "/*");
-
 
 
 //        OpenEntityManagerInViewFilter entityManagerInViewFilter = new OpenEntityManagerInViewFilter();

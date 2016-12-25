@@ -1,9 +1,10 @@
 package com.plateauu.jba.config;
 
-import org.apache.commons.dbcp.BasicDataSource;
-import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -16,55 +17,41 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
-@Profile("prod")
+@Profile("dev")
 @EnableTransactionManagement
 @EnableScheduling
 @EnableJpaRepositories(basePackages = "com.plateauu.jba.repository", entityManagerFactoryRef = "emf")
 @ComponentScan(basePackages = "com.plateauu.jba", excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = {Controller.class, EnableWebMvc.class})})
-public class RootContext {
+public class RootContextDev {
+
 
     @Bean
-    public BasicDataSource dataSource() throws URISyntaxException {
-        URI dbUri = new URI(System.getenv("DATABASE_URL"));
-
-        String username = dbUri.getUserInfo().split(":")[0];
-        String password = dbUri.getUserInfo().split(":")[1];
-        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
-
-        BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setUrl(dbUrl);
-        basicDataSource.setUsername(username);
-        basicDataSource.setPassword(password);
-
-        return basicDataSource;
+    public DataSource dataSource() {
+        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+        EmbeddedDatabase db = builder
+                .setType(EmbeddedDatabaseType.HSQL)
+                .build();
+        return db;
     }
-
 
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-        hibernateJpaVendorAdapter.setDatabase(Database.POSTGRESQL);
+        hibernateJpaVendorAdapter.setShowSql(true);
+        hibernateJpaVendorAdapter.setGenerateDdl(true);
+        hibernateJpaVendorAdapter.setDatabase(Database.HSQL);
         return hibernateJpaVendorAdapter;
 
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean emf(DataSource dataSource) {
+    public LocalContainerEntityManagerFactoryBean emf(DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource);
         emf.setPackagesToScan("com.plateauu.jba.entity");
-        emf.setPersistenceProvider(new HibernatePersistenceProvider());
-//        emf.setJpaVendorAdapter(jpaVendorAdapter);
-        Map<String, String> properties = new HashMap<>();
-        properties.put("hibernate.ddl-auto", "update");
-        properties.put("hibernate.show_sql", "false");
-        emf.setJpaPropertyMap(properties);
+        emf.setJpaVendorAdapter(jpaVendorAdapter);
         return emf;
 
     }

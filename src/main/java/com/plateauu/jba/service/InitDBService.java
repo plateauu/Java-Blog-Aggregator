@@ -35,29 +35,32 @@ public class InitDBService {
 
     @PostConstruct
     public void init(){
-        Role roleUser = new Role();
-        roleUser.setName("ROLE_USER");
-        roleRepository.save(roleUser);
 
-        Role roleAdmin = new Role();
-        roleAdmin.setName("ROLE_ADMIN");
-        roleRepository.save(roleAdmin);
+        if (roleRepository.findByName("ROLE_ADMIN") == null) {
 
-        User userAdmin = new User();
-        userAdmin.setName("admin");
-        userAdmin.setPassword(encoder.encode("admin"));
-        userAdmin.setEnabled(true);
-        List<Role> roles = new ArrayList<>();
-        roles.add(roleAdmin);
-        roles.add(roleUser);
-        userAdmin.setRoles(roles);
-        userRepository.save(userAdmin);
+            Role roleUser = new Role();
+            roleUser.setName("ROLE_USER");
+            roleRepository.save(roleUser);
 
-        Blog blogJavaVids = new Blog();
-        blogJavaVids.setName("JavaVids");
-        blogJavaVids.setUrl("http://feeds.feedburner.com/javavids?format=xml");
-        blogJavaVids.setUser(userAdmin);
-        blogRepository.save(blogJavaVids);
+            Role roleAdmin = new Role();
+            roleAdmin.setName("ROLE_ADMIN");
+            roleRepository.save(roleAdmin);
+
+            User userAdmin = new User();
+            userAdmin.setName("admin");
+            userAdmin.setPassword(encoder.encode("admin"));
+            userAdmin.setEnabled(true);
+            List<Role> roles = new ArrayList<>();
+            roles.add(roleAdmin);
+            roles.add(roleUser);
+            userAdmin.setRoles(roles);
+            userRepository.save(userAdmin);
+
+            Blog blogJavaVids = new Blog();
+            blogJavaVids.setName("JavaVids");
+            blogJavaVids.setUrl("http://feeds.feedburner.com/javavids?format=xml");
+            blogJavaVids.setUser(userAdmin);
+            blogRepository.save(blogJavaVids);
 
 //        Item item1 = new Item();
 //        item1.setBlog(blogJavaVids);
@@ -73,6 +76,7 @@ public class InitDBService {
 //        item2.setPublishedDate(new Date());
 //        itemRepository.save(item2);
 
+        }
     }
 
 }
