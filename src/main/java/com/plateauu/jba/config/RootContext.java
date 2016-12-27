@@ -65,12 +65,16 @@ public class RootContext {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource);
         emf.setPackagesToScan("com.plateauu.jba.entity");
-        emf.setPersistenceProvider(new HibernatePersistenceProvider());
 //        emf.setJpaVendorAdapter(jpaVendorAdapter);
-        Map<String, String> properties = new HashMap<>();
-        properties.put("hibernate.ddl-auto", "create");
-        properties.put("hibernate.show_sql", "true");
-        emf.setJpaPropertyMap(properties);
+
+        Map<String, String> jpaProperties = new HashMap<>();
+        jpaProperties.put("hibernate.hdm2ddl", "update");
+        jpaProperties.put("hibernate.show_sql", "true");
+        jpaProperties.put("hibernate.dialect", "PostgresSQL");
+        emf.setJpaPropertyMap(jpaProperties);
+
+        emf.setPersistenceProvider(new HibernatePersistenceProvider());
+
         return emf;
 
     }
