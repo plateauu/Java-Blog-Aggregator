@@ -5,7 +5,6 @@ import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -18,8 +17,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 @Configuration
@@ -31,6 +28,7 @@ import java.util.logging.Logger;
 public class RootContext {
 
     private static final Logger log = Logger.getLogger("Logger");
+    public static final String ENTITY_PACKAGE_TO_SCAN = "com.plateauu.jba.entity";
 
 
     @Bean
@@ -53,28 +51,20 @@ public class RootContext {
 
 
     @Bean
-    public JpaVendorAdapter jpaVendorAdapter() {
-        HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-        hibernateJpaVendorAdapter.setDatabase(Database.POSTGRESQL);
-        return hibernateJpaVendorAdapter;
-
-    }
-
-    @Bean
     public LocalContainerEntityManagerFactoryBean emf(DataSource dataSource) {
+        HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
+        adapter.setDatabase(Database.POSTGRESQL);
+        adapter.setGenerateDdl(true);
+        adapter.setShowSql(true);
+
+
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource);
-        emf.setPackagesToScan("com.plateauu.jba.entity");
-//        emf.setJpaVendorAdapter(jpaVendorAdapter);
+        emf.setPackagesToScan(ENTITY_PACKAGE_TO_SCAN);
+        emf.setJpaVendorAdapter(adapter);
 
-        Map<String, String> jpaProperties = new HashMap<>();
-        jpaProperties.put("hibernate.hdm2ddl", "update");
-        jpaProperties.put("hibernate.show_sql", "true");
-        jpaProperties.put("hibernate.dialect", "PostgresSQL");
-        emf.setJpaPropertyMap(jpaProperties);
 
         emf.setPersistenceProvider(new HibernatePersistenceProvider());
-
         return emf;
 
     }

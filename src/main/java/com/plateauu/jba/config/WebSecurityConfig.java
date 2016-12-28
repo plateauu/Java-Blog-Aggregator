@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         auth
                     .jdbcAuthentication()
                         .dataSource(dataSource)
-                        .withDefaultSchema()
+//                        .withDefaultSchema()
                         .passwordEncoder(encoder())
                         .authoritiesByUsernameQuery("select app_user.name, role.name from app_user " +
                                 "join app_user_role on app_user.id = app_user_role.users_id " +

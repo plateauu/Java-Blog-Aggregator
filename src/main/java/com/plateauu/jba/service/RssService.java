@@ -18,15 +18,13 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Service
 public class RssService {
 
 
+    public static final int BEGIN_INDEX = 0;
     private static final String SQUARE = "<";
     private static final String DATE_FORMAT = "EEE, dd MMM yyyy HH:mm:ss Z";
 
@@ -40,7 +38,7 @@ public class RssService {
 
     private List<Item> getItems(Source source) throws RssException {
 
-        List<Item> itemList =new ArrayList<>();
+        List<Item> itemList = new ArrayList<>();
 
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(ObjectFactory.class);
@@ -50,46 +48,41 @@ public class RssService {
 
             List<TRssChannel> channels = rss.getChannel();
             for (TRssChannel channel : channels) {
-                List<TRssItem> items = channel.getItem();
-                for (TRssItem rssItem : items) {
-                    Item item = new Item();
-                    item.setTitle(rssItem.getTitle());
-                    item.setLink(rssItem.getLink());
+                channel.getItem()
+                        .stream()
+                        .map(this::parseItem)
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
+                        .forEach(itemList::add);
 
-                    if (rssItem.getDescription().contains(SQUARE)) {
-                        item.setDescription(rssItem.getDescription().substring(0, rssItem.getDescription().indexOf(SQUARE)));
-                    } else {
-                        item.setDescription(rssItem.getDescription());
-                    }
-
-                    Date parseDate = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH).parse(rssItem.getPubDate());
-                    item.setPublishedDate(parseDate);
-
-                    //TODO convert Date to LocalDateTime
-//                     LocalDateTime parseDate = LocalDateTime.parse(rssItem.getPubDate(), DateTimeFormatter.RFC_1123_DATE_TIME);
-                    itemList.add(item);
-
-                }
             }
-//
-//            rss.getChannel().stream()
-//                    .map(TRssChannel::getItem)
-//                    .
-//                    .map(rssItem -> {
-//                        Item item = new Item();
-//                        item.setTitle(rssItem.getTitle());
-//                        item.setLink(rssItem.getLink());
-//                        item.setDescription(rssItem.getDescription());
-//                        Date parseDate = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH).parse(rssItem.getPubDate());
-//                        item.setPublishedDate(parseDate);
-//                        itemList.add(item);
-//
-//                    });
 
-
-        } catch (JAXBException | ParseException e) {
+        } catch (JAXBException e) {
             throw new RssException(e);
         }
+
         return itemList;
+    }
+
+    private Optional<Item> parseItem(TRssItem rssItem) {
+        Item item = new Item();
+        try {
+            item.setTitle(rssItem.getTitle());
+            item.setLink(rssItem.getLink());
+            parseDescriprion(rssItem, item);
+            Date parseDate = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH).parse(rssItem.getPubDate());
+            item.setPublishedDate(parseDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return Optional.ofNullable(item);
+    }
+
+    private void parseDescriprion(TRssItem rssItem, Item item) {
+        if (rssItem.getDescription().contains(SQUARE)) {
+            item.setDescription(rssItem.getDescription().substring(BEGIN_INDEX, rssItem.getDescription().indexOf(SQUARE)));
+        } else {
+            item.setDescription(rssItem.getDescription());
+        }
     }
 }
